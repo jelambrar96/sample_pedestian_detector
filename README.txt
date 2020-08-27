@@ -1,3 +1,13 @@
+# SIMPLE PEDESTIAN DETECTOR
+
+# __author__ = "Miquel Ferrarons, David Vazquez"
+# __copyright__ = "Copyright 2015, CVC-UAB"
+# __credits__ = ["Miquel Ferrarons", "David Vazquez"]
+# __license__ = "GPL"
+# __version__ = "1.0"
+# __maintainer__ = "Miquel Ferrarons"
+
+
 ##############################
 # Requirements:
 # Python 2.7.x
