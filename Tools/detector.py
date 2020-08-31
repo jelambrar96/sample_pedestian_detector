@@ -22,7 +22,6 @@ __version__ = "1.0"
 __maintainer__ = "Miquel Ferrarons"
 
 import os
-import feature_extractor
 import pickle
 import numpy as np
 from skimage import io
@@ -34,9 +33,15 @@ import math
 import nms
 import Config as cfg
 
+try:
+    import feature_extractor
+except ImportError:
+    # import
+    from . import feature_extractor 
+
 def testImage(imagePath, decisionThreshold = cfg.decision_threshold, applyNMS=True):
 
-    file = open(cfg.modelPath, 'r')
+    file = open(cfg.modelPath, 'rb')
     svc = pickle.load(file)
 
     image = io.imread(imagePath, as_grey=True)
@@ -71,7 +76,10 @@ def testImage(imagePath, decisionThreshold = cfg.decision_threshold, applyNMS=Tr
                 #Extract features
                 feats = feature_extractor.extractFeatures(subImage)
                 #Obtain prediction score
-                decision_func = svc.decision_function(feats)
+                # print(feats)
+                # print(feats[0].shape)
+                # print(len(feats))
+                decision_func = svc.decision_function(np.reshape(feats, (1, -1)))
 
                 if decision_func > decisionThreshold:
                     # Pedestrian found!
@@ -106,11 +114,11 @@ def testFolder(inputfolder, outputfolder, decisionThreshold = cfg.decision_thres
     fileList = os.listdir(inputfolder)
     imagesList = filter(lambda element: '.png' in element, fileList)
 
-    print 'Start processing '+inputfolder
+    print ('Start processing '+inputfolder)
     for filename in imagesList:
 
         imagepath = inputfolder + '/' + filename
-        print 'Processing '+imagepath
+        print ('Processing '+imagepath)
 
         #Test the current image
         bboxes, scores = testImage(imagepath, decisionThreshold=decisionThreshold, applyNMS=applyNMS)

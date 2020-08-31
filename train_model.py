@@ -30,18 +30,18 @@ from sklearn import linear_model
 import os
 
 def loadImageFeatures(featuresPath):
-    print 'Loading features from '+str(featuresPath)
-    file = open(featuresPath, 'r')
+    print ('Loading features from '+str(featuresPath))
+    file = open(featuresPath, 'rb')
     return pickle.load(file)
 
 def run():
     #List all the files .feat in the positives directory
     positiveList = os.listdir(cfg.positiveFeaturesPath)
-    positiveList = filter(lambda element: '.feat' in element, positiveList)
+    positiveList = list(filter(lambda element: '.feat' in element, positiveList))
 
     #List all the files .feat in the negatives directory
     negativeList = os.listdir(cfg.negativeFeaturesPath)
-    negativeList = filter(lambda element: '.feat' in element, negativeList)
+    negativeList = list(filter(lambda element: '.feat' in element, negativeList))
 
     #Count how many samples we have
     positiveSamplesCount = len(positiveList)
@@ -50,7 +50,8 @@ def run():
 
     #Load the features of the first element, to obtain the size of the feature vectors.
     filepath = cfg.positiveFeaturesPath + '/'+positiveList[0]
-    file = open(filepath, 'r')
+    print(filepath)
+    file = open(filepath, 'rb')
     feats = pickle.load(file)
     featuresLength = len(feats)
 
@@ -76,7 +77,7 @@ def run():
 
     # Train the classifier with X and y, and some given parameters
     if cfg.model == 'SVM':
-        print 'Training SVM....'
+        print ('Training SVM....')
         model = svm.LinearSVC(C=cfg.svm_C,
                                 #loss='hinge',# loss
                                 penalty=cfg.svm_penalty,
@@ -85,7 +86,7 @@ def run():
                                 fit_intercept=cfg.svm_fit_intercept,
                                 intercept_scaling=cfg.svm_intercept_scaling)
     elif cfg.model == 'LogisticRegression':
-        print 'Training linear model....'
+        print ('Training linear model....')
         model = linear_model.LogisticRegression(C=cfg.logReg_C,
                                    penalty=cfg.logReg_penalty,
                                    dual=cfg.logReg_dual,
@@ -93,13 +94,13 @@ def run():
                                    fit_intercept=cfg.logReg_fit_intercept,
                                    intercept_scaling=cfg.logReg_intercept_scaling)
     else:
-        print 'ERROR: Model can only be SVM or LogisticRegression'
+        print ('ERROR: Model can only be SVM or LogisticRegression')
         exit(0)
 
     model.fit(X, y)
     #Obtain the model score for the training set
-    print 'MODEL score'
-    print model.score(X, y)
+    print ('MODEL score')
+    print (model.score(X, y))
 
     #Save the model
     modelDirectory, modelFilename = os.path.split(cfg.modelPath)

@@ -23,7 +23,7 @@ __maintainer__ = "Miquel Ferrarons"
 
 import extract_features
 import train_model
-import test_image
+# import test_image
 import test_folder
 import show_results
 import evaluate_results

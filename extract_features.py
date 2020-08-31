@@ -42,10 +42,10 @@ def run():
         os.makedirs(cfg.negativeFeaturesPath)
 
     #Extract features for positive samples
-    print 'Extracting features from images in '+cfg.positiveInputPath
+    print('Extracting features from images in ' + cfg.positiveInputPath)
     extractAndStoreFeatures(cfg.positiveInputPath,  cfg.positiveFeaturesPath)
 
-    print 'Extracting features from images in '+cfg.negativeInputPath
+    print('Extracting features from images in ' + cfg.negativeInputPath)
     #Extract features for negative samples
     extractAndStoreFeatures(cfg.negativeInputPath,  cfg.negativeFeaturesPath)
 
@@ -62,10 +62,10 @@ def extractAndStoreFeatures(inputFolder, outputFolder):
         outputpath = outputFolder+'/'+filename+'.feat'
 
         if os.path.exists(outputpath):
-            print 'Features for ' + imagepath + '. Delete the file if you want to replace.'
+            print ('Features for ' + imagepath + '. Delete the file if you want to replace.')
             continue
 
-        print 'Extracting features for ' + imagepath
+        print ('Extracting features for ' + imagepath)
 
         image = io.imread(imagepath, as_grey=True)
         #Read the image as bytes (pixels with values 0-255)

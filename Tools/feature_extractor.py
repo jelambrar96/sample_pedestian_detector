@@ -41,7 +41,13 @@ def extractFeatures(img):
 def extractLBPfeatures(img):
 
     lbp = local_binary_pattern(img, cfg.lbp_n_points, cfg.lbp_radius, cfg.lbp_METHOD)
-    lbp_windows = view_as_windows(lbp, window_shape=cfg.lbp_win_shape, step=cfg.lbp_win_step)
+    """
+    print("cfg.lbp_win_shape")
+    print(cfg.lbp_win_shape)
+    print("cfg.lbp_win_step")
+    print(int(cfg.lbp_win_step))
+    """
+    lbp_windows = view_as_windows(lbp, window_shape=cfg.lbp_win_shape, step=int(cfg.lbp_win_step))
     features = []
     count = 0
     for windows_list in lbp_windows:

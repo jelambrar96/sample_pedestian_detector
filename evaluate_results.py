@@ -33,9 +33,9 @@ from Tools import utils
 
 def run():
 
-    print 'Start evaluating results'
+    print ('Start evaluating results')
     fileList = os.listdir(cfg.resultsFolder)
-    resultsFileList = filter(lambda element: '.result' in element, fileList)
+    resultsFileList = list(filter(lambda element: '.result' in element, fileList))
 
     detection_thresholds = np.arange(cfg.decision_threshold_min,
                                      cfg.decision_threshold_max,
@@ -48,7 +48,7 @@ def run():
     for resultsFile in resultsFileList:
         resultsFilePath = cfg.resultsFolder+'/'+resultsFile
 
-        file = open(resultsFilePath, 'r')
+        file = open(resultsFilePath, 'rb')
         imageResults = pickle.load(file)
         file.close()
 
@@ -89,7 +89,7 @@ def run():
             curThreshIDX += 1
 
     #Compute metrics
-    print totalTP + totalFP
+    print (totalTP + totalFP)
     detection_rate = totalTP / (totalTP + totalFN) #Tasa de deteccion
     miss_rate = 1 - detection_rate #Tasa de error
     fppi = totalFP / len(resultsFileList) #FPPI (Falsos positivos por imagen)

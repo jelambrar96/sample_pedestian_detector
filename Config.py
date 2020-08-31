@@ -48,7 +48,7 @@ hog_normalise = True
 ##################
 
 #TODO: Modify datasetRoot to point to your training dataset.
-datasetRoot = '.../Pedestrians/'
+datasetRoot = 'Datasets/Pedestrians-Dataset/'
 
 positive_folder = 'Pedestrians'
 negative_folder = 'Background'

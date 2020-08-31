@@ -37,7 +37,7 @@ def run():
     for resultsFile in resultsFileList:
 
         resultsFilePath = cfg.resultsFolder + '/' +resultsFile
-        file = open(resultsFilePath, 'r')
+        file = open(resultsFilePath, 'rb')
         imageResults = pickle.load(file)
 
         boxes = imageResults['bboxes']
@@ -46,10 +46,10 @@ def run():
 
         filename = os.path.basename(imagepath)
         if boxes is None:
-            print 'No pedestrians found for image '+imagepath
+            print ('No pedestrians found for image '+imagepath)
             continue
 
-        print 'Saving results for image '+filename
+        print ('Saving results for image '+filename)
 
         idx = np.where(scores > cfg.decision_threshold)
         boxes = boxes[idx]
@@ -60,11 +60,12 @@ def run():
         img = Image.open(imagepath)
         #Show the results on a colored image
         img = drawing.drawResultsOnImage(img, boxes, scores)
-        io.imsave('Results/'+filename, img)
+        # print(type(img))
+        io.imsave('Results/'+filename, np.array(img))
 
         file.close()
 
-    print 'Finished!'
+    print ('Finished!')
 
 if __name__ == '__main__':
     run()
